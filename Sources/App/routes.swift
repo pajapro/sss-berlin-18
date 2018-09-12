@@ -23,12 +23,13 @@ public func routes(_ router: Router) throws {
 
     // Example of configuring a controller
     let todoController = TodoController()
-    let todos = router.grouped("todos")
-    let todo = todos.grouped(Todo.parameter)
+    let todos = router.grouped("todos") // grouped "todos" endpoints
+    let todo = todos.grouped(Todo.parameter) // parameterized "todos" endpoints
+    let secureTodos = todos.grouped(SecretMiddleware.self) // secured "todos" endpoints by injecting `SecretMiddleware.self` type
     
     todos.get(use: todoController.index)
     todo.get(use: todoController.view)
-    todos.post(use: todoController.create)
+    secureTodos.post(use: todoController.create)
     todo.patch(use: todoController.update)
     todo.delete(use: todoController.delete)
     todos.delete(use: todoController.clear)
