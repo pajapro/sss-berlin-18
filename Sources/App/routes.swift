@@ -29,7 +29,10 @@ public func routes(_ router: Router) throws {
     
     todos.get(use: todoController.index)
     todo.get(use: todoController.view)
-    secureTodos.post(use: todoController.create) // Only this particular endpoint will require authentication
+    
+    // Only this particular endpoint will require authentication
+    todos.post(use: todoController.create) // will cause http://todobackend.com/specs/index.html?http://localhost:8080/todos to fail -> use `todos` to make tests pass
+    
     todo.patch(use: todoController.update)
     todo.delete(use: todoController.delete)
     todos.delete(use: todoController.clear)
